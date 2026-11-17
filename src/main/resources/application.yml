@@ -1,0 +1,40 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: toll-plaza-service
+  cache:
+    type: caffeine
+    cache-names:
+      - tollPlazas
+      - geocoding
+      - routes
+
+app:
+  csv:
+    path: classpath:toll_plaza_india.csv
+  openrouteservice:
+    api-key: ${ORS_API_KEY:}
+    base-url: ${ORS_BASE_URL:https://api.openrouteservice.org}
+    connect-timeout-ms: 5000
+    read-timeout-ms: 10000
+  toll-matching:
+    proximity-threshold-meters: 150.0
+    duplicate-distance-threshold-meters: 500.0
+  cache:
+    ttl-minutes: 60
+    max-size: 1000
+
+logging:
+  level:
+    com.example.tollplaza: INFO
+    org.springframework.web: INFO
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+    tryItOutEnabled: true
